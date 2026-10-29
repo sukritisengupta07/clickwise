@@ -73,8 +73,6 @@ Clickwise/
 - The keyword and shortener lists are small and English-only
 - Legitimate sites can score high and malicious sites can score low
 
-## Screenshots
-Add screenshots here after you run the app (home page, a Low Risk result, a High Risk result, mobile view).
 
 ## Test examples
 These are made-up addresses (`example.com`, `example.test` and `203.0.113.x` are reserved for documentation):
