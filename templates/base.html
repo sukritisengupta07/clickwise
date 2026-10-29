@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Clickwise{% endblock %}</title>
+  <meta name="description" content="Clickwise is a beginner-friendly, rule-based URL checker that points out warning signs. It does not visit links and cannot say whether a site is safe.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="wrap">
+    <header class="brand">
+      <svg class="logo" viewBox="0 0 48 56" role="img" aria-label="Clickwise shield logo">
+        <path d="M24 3 L43 10 V27 C43 40 34 49 24 53 C14 49 5 40 5 27 V10 Z" class="shield"/>
+        <circle cx="22" cy="25" r="8" class="lens"/>
+        <path d="M28 31 L36 39" class="handle"/>
+      </svg>
+      <div>
+        <a class="name" href="{{ url_for('index') }}">Clickwise</a>
+        <p class="tagline">Think before you click.</p>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+      <p>Clickwise is a learning project. It checks the <em>text</em> of a link against simple rules and never opens the link. Scores are not stored.</p>
+    </footer>
+  </main>
+</body>
+</html>

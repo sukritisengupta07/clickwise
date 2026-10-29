@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Clickwise | Result{% endblock %}
+{% block content %}
+<section class="card result {{ result.level }}">
+  <p class="label">URL you submitted</p>
+  <p class="submitted"><code>{{ result.input }}</code></p>
+  {% if result.assumed_scheme %}
+    <p class="small">No http:// or https:// was given, so http:// was assumed for the analysis only.</p>
+  {% endif %}
+
+  <div class="score-row">
+    <div class="score-number">{{ result.score }}<span>/100</span></div>
+    <div>
+      <span class="badge {{ result.level }}">{{ result.category }}</span>
+      <progress class="meter {{ result.level }}" value="{{ result.score }}" max="100">{{ result.score }}</progress>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>What was noticed</h2>
+  {% if result.indicators %}
+    <ul class="indicators">
+      {% for item in result.indicators %}
+        <li>
+          <div class="ind-head"><strong>{{ item.title }}</strong><span class="pts">+{{ item.points }}</span></div>
+          <p>{{ item.detail }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="none">No configured warning indicators detected.</p>
+    <p class="small">That does not mean the link is safe. Clickwise only checks a few simple patterns in the text of the address.</p>
+  {% endif %}
+</section>
+
+<section class="card disclaimer">
+  <h2>Please read</h2>
+  <p>This score is a simple teaching heuristic, not a verdict. It is not machine learning and it is not the probability that a site is phishing. A low score does not guarantee a site is safe, and a high score does not prove it is malicious. HTTPS does not make a site trustworthy either. If you are unsure, type the website address yourself instead of clicking.</p>
+</section>
+
+<div class="actions">
+  <a class="button secondary" href="{{ url_for('index') }}">Scan another URL</a>
+  <form method="post" action="{{ url_for('download') }}">
+    <input type="hidden" name="url" value="{{ result.input }}">
+    <input type="hidden" name="scanned_at" value="{{ result.scanned_at }}">
+    <button type="submit">Download report (CSV)</button>
+  </form>
+</div>
+<p class="small centered">Scanned at {{ result.scanned_at }}</p>
+{% endblock %}

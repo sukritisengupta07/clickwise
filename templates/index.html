@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Clickwise | Check a link for warning signs{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Check a link for warning signs</h1>
+  <p class="lead">Paste a URL below. Clickwise looks at the way the address is written and lists anything that looks unusual. It does <strong>not</strong> open the link.</p>
+
+  <form method="post" action="{{ url_for('scan') }}" class="scan-form">
+    <label for="url">URL to check</label>
+    <input id="url" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false"
+           maxlength="{{ max_len }}" required value="{{ url_value }}" placeholder="https://example.com/login">
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <button type="submit">Scan URL</button>
+  </form>
+</section>
+
+<section class="card">
+  <details>
+    <summary>How the score works</summary>
+    <p class="small">Each rule adds points. The total is capped at 100. Related rules share a cap so the same oddity is not counted twice. 0 to 29 is Low Risk, 30 to 59 is Medium Risk and 60 to 100 is High Risk. These cut-offs are illustrative, not scientifically validated.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Rule</th><th>Points</th><th>Why it matters</th></tr></thead>
+        <tbody>
+        {% for name, points, why in rules %}
+          <tr><td>{{ name }}</td><td>{{ points }}</td><td>{{ why }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>Test examples you can try</summary>
+    <p class="small">These are made-up addresses for testing only.</p>
+    <ul class="examples">
+      <li><code>https://www.example.com/about</code></li>
+      <li><code>http://203.0.113.5/secure/login</code></li>
+      <li><code>https://bit.ly/abc123</code></li>
+      <li><code>http://paypal.secure-login-verify.example.test@203.0.113.9/login?verify=1</code></li>
+    </ul>
+  </details>
+</section>
+{% endblock %}
